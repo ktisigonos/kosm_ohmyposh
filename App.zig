@@ -65,8 +65,8 @@ pub const Entry = struct {
 pub fn from(theme: kosm.Theme) App {
     const palette = theme.palette;
     var colors: Colors = .{
-        .foreground = if (theme.mode == .dark) palette.white else palette.black,
-        .background = theme.asBackground(if (theme.mode == .dark) palette.black else palette.white),
+        .foreground = theme.roles.foreground,
+        .background = theme.asBackground(theme.roles.background),
     };
     inline for (@typeInfo(Colors).@"struct".field_names[2..]) |name| @field(colors, name) = @field(palette, name);
     return .{ .colors = colors };
@@ -165,7 +165,7 @@ test "from fills every name, a TOML config works, and a repeated name or missing
     var fixture: Fixture = undefined;
     try fixture.init("prompt.toml", "version = 3\npalette = {}\n");
     defer fixture.deinit();
-    var app = from(kosm.Theme.from(.{ .black = kosm.hex("041c26"), .white = kosm.hex("a3c5cc") }, .dark));
+    var app = from(kosm.Theme.from(.{ .palette = .{ .black = kosm.hex("041c26"), .white = kosm.hex("a3c5cc") }, .mode = .dark }));
     app.file = "~/.config/oh-my-posh/prompt.toml";
     try app.apply(&fixture.output);
     const written = fixture.planned("~/.config/oh-my-posh/prompt.toml");
