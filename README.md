@@ -15,7 +15,11 @@ Field names are Oh My Posh's, and every field left null or empty is not written,
 Posh's default applies. A segment's color is a palette name (`.{ .palette = "accent" }`, written
 `p:accent`, so it follows the kosmos), a color of its own (`.{ .color = ... }`), or one of Oh My
 Posh's words (`.{ .text = "transparent" }`). Color templates name palette colors the same way:
-`{{ if .Root }}p:error{{ end }}`. New shells pick changes up.
+`{{ if .Root }}p:error{{ end }}`.
+
+Oh My Posh caches the config per shell, so only new shells pick an apply up. To have open
+shells follow on their next prompt, turn on its live reload once (it re-reads the config each
+prompt): `oh-my-posh enable reload`.
 
 `from(theme)` fills the palette: `foreground` and `background`, the roles `accent`,
 `secondary`, `success`, `warning` and `error`, then the palette's colors by name (`black`,
