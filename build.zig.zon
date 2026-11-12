@@ -22,6 +22,8 @@
         "build.zig.zon",
         "root.zig",
         "App.zig",
+        "Block.zig",
+        "Segment.zig",
         "README.md",
     },
 }
